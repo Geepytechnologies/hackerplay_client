@@ -14,6 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { SETQUESTION } from "../config/slices/userSlice";
 import { Actions, Attempt } from "../utils/actions";
 import { RootState } from "../config/store";
+import { ErrorToast, SuccessToast } from "../utils/Toasts";
+import { ToastContainer, toast } from "react-toastify";
+import { FaAngleRight } from "react-icons/fa6";
 
 type Props = {};
 
@@ -62,6 +65,7 @@ const Home = (props: Props) => {
       // Processed - we have a result
       if (statusId === 1 || statusId === 2) {
         // still processing
+        toast.warn("Still Processing");
         setTimeout(() => {
           checkStatus(token);
         }, 2000);
@@ -69,12 +73,12 @@ const Home = (props: Props) => {
       } else {
         setLoading(false);
         setCodeOutput(response.data);
-        // showSuccessToast(`Compiled Successfully!`);
+        SuccessToast("Compiled Successfully!");
         // console.log("response.data", response.data);
         return;
       }
     } catch (err) {
-      // console.log("err", err);
+      ErrorToast("Compilation Failed");
       setLoading(false);
       //   showErrorToast();
     }
@@ -101,6 +105,7 @@ const Home = (props: Props) => {
       const response = await axios.request(options);
       // console.log("res.data", response.data);
       const token = response.data.token;
+      SuccessToast("Compiled Successfully!");
       checkStatus(token);
       //     const data:Attempt = {
       //       input: btoa(code),
@@ -114,15 +119,10 @@ const Home = (props: Props) => {
     } catch (err: any) {
       let error = err.response ? err.response.data : err;
       let status = err.response ? err.response.status : "Network Error";
-      console.log("status", status);
       if (status === 429) {
-        // console.log("too many requests", status);
-        // showErrorToast(
-        //   `Quota of 100 requests exceeded for the Day! Please read the blog on freeCodeCamp to learn how to setup your own RAPID API Judge0!`,
-        //   10000
-        // );
+        ErrorToast("Too many requests");
       }
-      // console.log("catch block...", error);
+      ErrorToast(error);
     } finally {
       setLoading(false);
     }
@@ -140,6 +140,7 @@ const Home = (props: Props) => {
   const dispatch = useDispatch();
   return (
     <div>
+      <ToastContainer />
       <Navbar />
       <div className="bg-[#f0f0f0] flex px-2 items-center justify-between py-4">
         <div className="flex items-center gap-2">
@@ -148,9 +149,14 @@ const Home = (props: Props) => {
         </div>
         <button
           onClick={compileCode}
-          className="bg-secondary text-white py-2 px-3 rounded-md flex items-center gap-2"
+          className="bg-secondary w-[100px] text-white py-2 px-3 rounded-md flex justify-center items-center gap-2"
         >
-          <IoPlayOutline className="text-[1.8rem]" /> Run
+          {!loading && (
+            <div className="flex gap-2 items-center">
+              <IoPlayOutline className="text-[1.8rem]" /> Run
+            </div>
+          )}
+          {loading && <div className="loader"></div>}
         </button>
       </div>
       <div className="flex flex-row">
@@ -166,7 +172,10 @@ const Home = (props: Props) => {
         className={`bg-white top-0 left-0 sidebar h-screen z-[888]`}
       >
         <div className="flex h-[90px] items-center justify-between px-3">
-          <p className="text-[1.2rem] text-gray-600">Problem List </p>
+          <div className="flex gap-2 items-center text-[1.2rem] text-gray-600">
+            <p className="">Problem List </p>
+            <FaAngleRight />
+          </div>
           <div
             onClick={close}
             className="border flex border-[#7d3e91] rounded-sm p-1"

@@ -8,6 +8,7 @@ import PersistUser from "./utils/PersistUser";
 import Signup from "./components/Signup";
 import { useSelector } from "react-redux";
 import Profile from "./screens/Profile";
+import ProtectRoute from "./utils/ProtectRoute";
 
 function App() {
   const appUser = useSelector((state: any) => state.user);
@@ -19,11 +20,12 @@ function App() {
             <Route path="*" element={<Home />} />
             <Route path="/" element={<Home />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="admin" element={<Admin />} />
           </Route>
-
-          <Route path="admin" element={<Admin />} />
-          <Route path="signin" element={<Signin />} />
-          <Route path="signup" element={<Signup />} />
+          <Route element={<ProtectRoute />}>
+            <Route path="signin" element={<Signin />} />
+            <Route path="signup" element={<Signup />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

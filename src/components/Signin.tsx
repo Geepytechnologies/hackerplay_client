@@ -135,11 +135,10 @@ const Signin = (props: Props) => {
           </Link>
         </div>
         <button
-          disabled={loading}
           onClick={handleSubmit}
-          className="bg-secondary w-full rounded-md px-4 py-2 text-white font-[500] font-mont"
+          className="bg-secondary w-full flex items-center justify-center rounded-md px-4 py-2 text-white font-[500] font-mont"
         >
-          Signin
+          {!loading ? "Signin" : <div className="loader"></div>}
         </button>
       </div>
     </div>
