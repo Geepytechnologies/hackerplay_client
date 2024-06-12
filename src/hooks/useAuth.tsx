@@ -4,10 +4,10 @@ import { RootState } from "../config/store";
 
 const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const user = useSelector((state: RootState) => state.user);
-  console.log({ userfromstate: user });
+  const { currentuser } = useSelector((state: RootState) => state.user);
+  console.log({ userfromstate: currentuser });
   useEffect(() => {
-    if (user) {
+    if (currentuser) {
       setIsAuthenticated(true);
     }
   }, []);

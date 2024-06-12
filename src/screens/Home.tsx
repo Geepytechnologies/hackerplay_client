@@ -10,12 +10,17 @@ import { IoPlayOutline } from "react-icons/io5";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import Question from "../components/Question";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SETQUESTION } from "../config/slices/userSlice";
+import { Actions, Attempt } from "../utils/actions";
+import { RootState } from "../config/store";
 
 type Props = {};
 
 const Home = (props: Props) => {
+  const { currentuser, question } = useSelector(
+    (state: RootState) => state.user
+  );
   const defaultcode = "// Welcome to the hackerplay playground";
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState(defaultcode);
@@ -75,18 +80,14 @@ const Home = (props: Props) => {
   };
   const compileCode = async () => {
     setLoading(true);
-    const formData = {
-      language_id: language.id,
-      source_code: btoa(code),
-      stdin: btoa(customInput),
-    };
+
     const options = {
       method: "POST",
       url: "https://judge0-ce.p.rapidapi.com/submissions",
       params: { base64_encoded: "true", fields: "*" },
       headers: {
-        "x-rapidapi-key": "44d10f7a1amsh3b7d41e7bfe2b2fp192341jsnfc61a36f9c21",
-        "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+        "x-rapidapi-key": `${CONSTANTS.API_KEY}`,
+        "x-rapidapi-host": `${CONSTANTS.API_HOST}`,
         "Content-Type": "application/json",
       },
       data: {
@@ -100,6 +101,15 @@ const Home = (props: Props) => {
       console.log("res.data", response.data);
       const token = response.data.token;
       checkStatus(token);
+      //     const data:Attempt = {
+      //       input: btoa(code),
+      // output: string,
+      // result: string,
+      // status: string,
+      // userId: currentuser.result.id,
+      // questionId: question
+      //     }
+      //     await Actions.createAttempt(data)
     } catch (err: any) {
       let error = err.response ? err.response.data : err;
       let status = err.response ? err.response.status : "Network Error";

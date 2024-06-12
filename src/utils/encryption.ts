@@ -9,7 +9,9 @@ export class Encryption {
     ).toString();
   };
   static decryptData = (ciphertext: any) => {
-    const bytes = CryptoJS.AES.decrypt(ciphertext, CONSTANTS.secretkey);
-    return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    if (ciphertext !== null) {
+      const bytes = CryptoJS.AES.decrypt(ciphertext, CONSTANTS.secretkey);
+      return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    }
   };
 }

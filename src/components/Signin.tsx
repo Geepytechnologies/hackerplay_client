@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Logo from "./Logo";
 import Joi from "joi";
 import Navbar from "./Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CONSTANTS } from "../constants";
 import { useDispatch } from "react-redux";
 import { SIGNIN } from "../config/slices/userSlice";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Props = {};
 
@@ -15,6 +17,7 @@ const Signin = (props: Props) => {
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const schema = Joi.object({
     email: Joi.string().email({
@@ -51,8 +54,26 @@ const Signin = (props: Props) => {
         });
         console.log(res.data);
         dispatch(SIGNIN(res.data));
+        toast.success("Successful!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        navigate("/");
       } catch (error: any) {
-        throw new Error(error);
+        if (error?.response.status === 404) {
+          toast.error(error.response.data.message, {
+            hideProgressBar: true,
+          });
+        } else {
+          toast.error("Something went wrong", { hideProgressBar: true });
+        }
       } finally {
         setFormdata({ email: "", password: "" });
 
@@ -62,6 +83,7 @@ const Signin = (props: Props) => {
     } else {
       // Form data is invalid, display errors
       console.log("Form data is invalid");
+      setLoading(false);
     }
   };
   const handlechange = (e: any) => {
@@ -69,6 +91,7 @@ const Signin = (props: Props) => {
   };
   return (
     <div className="flex flex-col gap-5 items-center justify-center bg-gradient-to-r from-[#6d7f9e] to-secondary h-screen">
+      <ToastContainer />
       <div className="absolute top-0 left-0 w-full">
         <div className="h-[70px] bg-slate-700 flex items-center justify-between px-2 text-white">
           <Logo />
@@ -84,6 +107,7 @@ const Signin = (props: Props) => {
           <input
             onChange={handlechange}
             name="email"
+            value={formdata.email}
             type="text"
             className="rounded-md py-3 px-2 outline-0 border border-gray-500"
           />
@@ -97,6 +121,7 @@ const Signin = (props: Props) => {
             onChange={handlechange}
             name="password"
             type="password"
+            value={formdata.password}
             className="rounded-md py-3 px-2 outline-0 border border-gray-500"
           />
           <span className="text-red-500 text-[12px]">
@@ -110,6 +135,7 @@ const Signin = (props: Props) => {
           </Link>
         </div>
         <button
+          disabled={loading}
           onClick={handleSubmit}
           className="bg-secondary w-full rounded-md px-4 py-2 text-white font-[500] font-mont"
         >
