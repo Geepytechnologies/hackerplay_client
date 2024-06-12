@@ -10,11 +10,11 @@ export class LocalStorage {
         return parsedValue;
       } catch (error) {
         console.error("Error parsing stored value:", error);
-        return null;
+        return "";
       }
     } else {
       console.log("it is null");
-      return null;
+      return "";
     }
   }
   static removeItem(key: any) {
