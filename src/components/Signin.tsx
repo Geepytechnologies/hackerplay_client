@@ -55,22 +55,21 @@ const Signin = (props: Props) => {
         });
         // console.log(res.data);
         dispatch(SIGNIN(res.data));
-        console.log(res.data);
         if (res.data) {
           location.replace("/");
         }
 
-        // toast.success("Successful!", {
-        //   position: "top-center",
-        //   autoClose: 5000,
-        //   hideProgressBar: true,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "light",
-        //   transition: Bounce,
-        // });
+        toast.success("Successful!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       } catch (error: any) {
         if (error?.response?.status === 404) {
           toast.error(error.response.data.message, {

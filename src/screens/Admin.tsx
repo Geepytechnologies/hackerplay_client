@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminLayout from "../layouts/AdminLayout";
 import GenericPie from "../components/charts/GenericPie";
 import { LuCalendarDays } from "react-icons/lu";
 import { IoMdInformationCircle } from "react-icons/io";
+import { CONSTANTS } from "../constants";
+import axios from "axios";
 
 type Props = {};
 
 const Admin = (props: Props) => {
+  const [users, setUsers] = useState([]);
+  const [attempts, setAttempts] = useState([]);
+
+  const getUsers = async () => {
+    try {
+      const res = await axios.get(`${CONSTANTS.SERVERURL}/user`);
+      setUsers(res.data);
+    } catch (error) {}
+  };
+  const getAttempts = async () => {
+    try {
+      const res = await axios.get(`${CONSTANTS.SERVERURL}/attempts`);
+      setAttempts(res.data);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getUsers();
+    getAttempts();
+  }, []);
   return (
     <AdminLayout>
       <div className="flex flex-col">
@@ -18,8 +39,10 @@ const Admin = (props: Props) => {
               <LuCalendarDays className="text-white" />
             </div>
             <div className="flex items-center flex-col text-white">
-              <h2 className="text-[32px] font-[600]">{"4"}</h2>
-              <h2 className="text-[14px] font-[400]">Users</h2>
+              <h2 className="text-[32px] font-[600]">
+                {users && users?.length}
+              </h2>
+              <h2 className="text-[14px] font-[400]">Total Users</h2>
             </div>
           </div>
           {/* indicator2 */}
@@ -28,8 +51,12 @@ const Admin = (props: Props) => {
               <LuCalendarDays className="text-white" />
             </div>
             <div className="flex flex-col items-center text-white">
-              <h2 className="text-[32px] font-[600]">{"4"}</h2>
-              <h2 className="text-[14px] text-center font-[400]">Attempts</h2>
+              <h2 className="text-[32px] font-[600]">
+                {attempts && attempts.length}
+              </h2>
+              <h2 className="text-[14px] text-center font-[400]">
+                Total User Attempts
+              </h2>
             </div>
           </div>
         </div>
@@ -46,7 +73,10 @@ const Admin = (props: Props) => {
             </div>
             <hr />
             {/* Gravidity diagram */}
-            <GenericPie colors={["#14A673", "#c953c9"]} series={[4, 6]} />
+            <GenericPie
+              colors={["#14A673", "#c953c9"]}
+              series={[users && users.length, 0]}
+            />
 
             {/* info about chart */}
             <div className="flex gap-7 px-2 py-4">
@@ -72,7 +102,10 @@ const Admin = (props: Props) => {
             </div>
             <hr />
             {/* Gravidity diagram */}
-            <GenericPie colors={["#14A673", "#c953c9"]} series={[4, 6]} />
+            <GenericPie
+              colors={["#14A673", "#c953c9"]}
+              series={[attempts && attempts.length, 0]}
+            />
 
             {/* info about chart */}
             <div className="flex gap-7 px-2 py-4">

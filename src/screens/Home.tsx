@@ -74,17 +74,33 @@ const Home = (props: Props) => {
         setLoading(false);
         setCodeOutput(response.data);
         SuccessToast("Compiled Successfully!");
-        // console.log("response.data", response.data);
+        const data: Attempt = {
+          input: response.data.source_code,
+          output: response.data.stdout,
+          result: "success",
+          status: "SUCCESS",
+          userId: currentuser.result.id,
+          questionId: question,
+        };
+        await Actions.createAttempt(data);
         return;
       }
     } catch (err) {
       ErrorToast("Compilation Failed");
+      const data: Attempt = {
+        input: btoa(code),
+        output: "",
+        result: "fail",
+        status: "FAIL",
+        userId: currentuser.result.id,
+        questionId: question,
+      };
+      await Actions.createAttempt(data);
       setLoading(false);
       //   showErrorToast();
     }
   };
   const compileCode = async () => {
-    console.log(code);
     setLoading(true);
 
     const options = {
@@ -108,15 +124,6 @@ const Home = (props: Props) => {
       const token = response.data.token;
       SuccessToast("Code received!");
       checkStatus(token);
-      //     const data:Attempt = {
-      //       input: btoa(code),
-      // output: string,
-      // result: string,
-      // status: string,
-      // userId: currentuser.result.id,
-      // questionId: question
-      //     }
-      //     await Actions.createAttempt(data)
     } catch (err: any) {
       let error = err.response ? err.response.data : err;
       let status = err.response ? err.response.status : "Network Error";

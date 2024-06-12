@@ -23,7 +23,6 @@ export class Actions {
     };
     try {
       const res = await axios.post(`${CONSTANTS.SERVERURL}/attempts`, mydata);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     } finally {
