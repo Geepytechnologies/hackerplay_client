@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import Logo from "./Logo";
 import Joi from "joi";
 import Navbar from "./Navbar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CONSTANTS } from "../constants";
 import { useDispatch } from "react-redux";
 import { SIGNIN } from "../config/slices/userSlice";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ErrorToast } from "../utils/Toasts";
 
 type Props = {};
 
@@ -54,20 +55,24 @@ const Signin = (props: Props) => {
         });
         // console.log(res.data);
         dispatch(SIGNIN(res.data));
-        toast.success("Successful!", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-        navigate("/");
+        console.log(res.data);
+        if (res.data) {
+          location.replace("/");
+        }
+
+        // toast.success("Successful!", {
+        //   position: "top-center",
+        //   autoClose: 5000,
+        //   hideProgressBar: true,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "light",
+        //   transition: Bounce,
+        // });
       } catch (error: any) {
-        if (error?.response.status === 404) {
+        if (error?.response?.status === 404) {
           toast.error(error.response.data.message, {
             hideProgressBar: true,
           });
@@ -81,6 +86,7 @@ const Signin = (props: Props) => {
       }
       // console.log("Form data is valid:", formdata);
     } else {
+      ErrorToast("Invalid credentials");
       // Form data is invalid, display errors
       // console.log("Form data is invalid");
       setLoading(false);

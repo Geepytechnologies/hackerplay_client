@@ -19,12 +19,12 @@ function App() {
           <Route element={<PersistUser />}>
             <Route path="*" element={<Home />} />
             <Route path="/" element={<Home />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="admin" element={<Admin />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/admin" element={<Admin />} />
           </Route>
           <Route element={<ProtectRoute />}>
-            <Route path="signin" element={<Signin />} />
-            <Route path="signup" element={<Signup />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
           </Route>
         </Routes>
       </BrowserRouter>

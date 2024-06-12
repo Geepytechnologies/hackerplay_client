@@ -84,6 +84,7 @@ const Home = (props: Props) => {
     }
   };
   const compileCode = async () => {
+    console.log(code);
     setLoading(true);
 
     const options = {
@@ -105,7 +106,7 @@ const Home = (props: Props) => {
       const response = await axios.request(options);
       // console.log("res.data", response.data);
       const token = response.data.token;
-      SuccessToast("Compiled Successfully!");
+      SuccessToast("Code received!");
       checkStatus(token);
       //     const data:Attempt = {
       //       input: btoa(code),

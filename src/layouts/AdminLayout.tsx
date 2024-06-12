@@ -10,7 +10,7 @@ const AdminLayout = ({ children }: Props) => {
   return (
     <div className="flex flex-row">
       <Menu />
-      <div className="flex flex-col">
+      <div className="flex flex-col flex-1">
         <Header />
         {children}
       </div>
