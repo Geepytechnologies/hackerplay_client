@@ -49,13 +49,14 @@ const Home = (props: Props) => {
         fields: "*",
       },
       headers: {
-        "x-rapidapi-key": "44d10f7a1amsh3b7d41e7bfe2b2fp192341jsnfc61a36f9c21",
-        "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+        "x-rapidapi-key": `${CONSTANTS.API_KEY}`,
+        "x-rapidapi-host": `${CONSTANTS.API_HOST}`,
+        "Content-Type": "application/json",
       },
     };
     try {
       let response = await axios.request(options);
-      console.log(response);
+      // console.log(response);
       let statusId = response.data.status?.id;
 
       // Processed - we have a result
@@ -69,11 +70,11 @@ const Home = (props: Props) => {
         setLoading(false);
         setCodeOutput(response.data);
         // showSuccessToast(`Compiled Successfully!`);
-        console.log("response.data", response.data);
+        // console.log("response.data", response.data);
         return;
       }
     } catch (err) {
-      console.log("err", err);
+      // console.log("err", err);
       setLoading(false);
       //   showErrorToast();
     }
@@ -98,7 +99,7 @@ const Home = (props: Props) => {
     };
     try {
       const response = await axios.request(options);
-      console.log("res.data", response.data);
+      // console.log("res.data", response.data);
       const token = response.data.token;
       checkStatus(token);
       //     const data:Attempt = {
@@ -115,13 +116,13 @@ const Home = (props: Props) => {
       let status = err.response ? err.response.status : "Network Error";
       console.log("status", status);
       if (status === 429) {
-        console.log("too many requests", status);
+        // console.log("too many requests", status);
         // showErrorToast(
         //   `Quota of 100 requests exceeded for the Day! Please read the blog on freeCodeCamp to learn how to setup your own RAPID API Judge0!`,
         //   10000
         // );
       }
-      console.log("catch block...", error);
+      // console.log("catch block...", error);
     } finally {
       setLoading(false);
     }

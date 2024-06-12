@@ -68,7 +68,7 @@ const Signup = (props: Props) => {
           email: formdata.email,
           password: formdata.password,
         });
-        console.log(res.data);
+        // console.log(res.data);
         navigate("/signin");
       } catch (error: any) {
         if (error?.response.status === 400) {
@@ -87,10 +87,9 @@ const Signup = (props: Props) => {
         });
         setLoading(false);
       }
-      console.log("Form data is valid:", formdata);
+      // console.log("Form data is valid:", formdata);
     } else {
-      // Form data is invalid, display errors
-      console.log("Form data is invalid");
+      // console.log("Form data is invalid");
       setLoading(false);
     }
   };

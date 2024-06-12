@@ -1,30 +1,23 @@
-# React + TypeScript + Vite
+# Hackerplay - Compile and Execute code in 40+ languages
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+⚡️ A code editor that compiles and runs your code on the web.
 
-Currently, two official plugins are available:
+## Features:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Compile and execute code in 40+ programming languages.
 
-## Expanding the ESLint configuration
+## Installations and setup
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- git clone `https://github.com/Geepytechnologies/hackerplay_client.git`
+- `npm install`
+- Register on <a href="https://rapidapi.com/judge0-official/api/judge0-ce/pricing" target="__blank">RapidAPI</a> and get your API keys.
+- Create a `.env` file.
+- Add the API Keys in the `.env` file
+- `npm start` to run the project.
 
-- Configure the top-level `parserOptions` property like this:
+FEATURES:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. Over 10 programming languages [JavaScript as a Default]
+2. User login, authentication and registration (NodeJS)
+3. User Profile Page
+4. Save code functionality (MYSQL Database)

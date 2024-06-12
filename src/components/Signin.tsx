@@ -52,7 +52,7 @@ const Signin = (props: Props) => {
           email: formdata.email,
           password: formdata.password,
         });
-        console.log(res.data);
+        // console.log(res.data);
         dispatch(SIGNIN(res.data));
         toast.success("Successful!", {
           position: "top-center",
@@ -79,10 +79,10 @@ const Signin = (props: Props) => {
 
         setLoading(false);
       }
-      console.log("Form data is valid:", formdata);
+      // console.log("Form data is valid:", formdata);
     } else {
       // Form data is invalid, display errors
-      console.log("Form data is invalid");
+      // console.log("Form data is invalid");
       setLoading(false);
     }
   };

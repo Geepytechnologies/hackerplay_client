@@ -11,7 +11,6 @@ import Profile from "./screens/Profile";
 
 function App() {
   const appUser = useSelector((state: any) => state.user);
-  console.log(appUser);
   return (
     <>
       <BrowserRouter>
