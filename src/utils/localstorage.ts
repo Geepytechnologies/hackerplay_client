@@ -7,7 +7,6 @@ export class LocalStorage {
     if (storedValue !== null) {
       try {
         const parsedValue = JSON.parse(storedValue);
-        console.log("parsed", parsedValue);
         return parsedValue;
       } catch (error) {
         console.error("Error parsing stored value:", error);

@@ -1,4 +1,5 @@
 import React from "react";
+import { MdOutput } from "react-icons/md";
 
 type Props = {
   result: any;
@@ -36,8 +37,13 @@ const CodeOutput = ({ result }: Props) => {
     }
   };
   return (
-    <div className="flex-1 text-[1.4rem] bg-primary">
-      {result ? <>{getOutput()}</> : null}
+    <div className=" min-h-[400px] p-2">
+      <div className="rounded-md border h-full border-gray-300">
+        <div className="flex items-center gap-3 p-2">
+          <MdOutput className="text-teal-500" /> Output
+        </div>
+        {result ? <>{getOutput()}</> : null}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { Editor } from "@monaco-editor/react";
 import React, { useState } from "react";
+import { FaCode } from "react-icons/fa";
 
 type Props = {
   onChange: any;
@@ -16,9 +17,12 @@ const Playground = ({ onChange, language, code, theme }: Props) => {
     onChange("code", value);
   };
   return (
-    <div className="rounded-md bg-[red] min-w-[60%] h-full shadow-4xl">
+    <div className="rounded-md shadow-4xl border-l border-gray-400">
+      <div className="flex items-center gap-3 p-2">
+        <FaCode className="text-red-300" /> Code
+      </div>
       <Editor
-        height="85vh"
+        height="400px"
         language={language || "javascript"}
         value={value}
         theme={theme}

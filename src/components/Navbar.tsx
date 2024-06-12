@@ -17,7 +17,7 @@ const Navbar = (props: Props) => {
         <div className="w-[30px] h-[30px] flex items-center justify-center bg-white rounded-full">
           <FaUser className="text-secondary" />
         </div>
-        <p>{currentuser && currentuser.result.firstname}</p>
+        <p>{currentuser && currentuser?.result?.firstname}</p>
       </div>
     </div>
   );

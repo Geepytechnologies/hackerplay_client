@@ -7,6 +7,7 @@ import Signin from "./components/Signin";
 import PersistUser from "./utils/PersistUser";
 import Signup from "./components/Signup";
 import { useSelector } from "react-redux";
+import Profile from "./screens/Profile";
 
 function App() {
   const appUser = useSelector((state: any) => state.user);
@@ -22,6 +23,7 @@ function App() {
           <Route path="admin" element={<Admin />} />
           <Route path="signin" element={<Signin />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </>
